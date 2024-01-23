@@ -15,8 +15,8 @@ app.component('mega-calc', {
             <p> СберПремьер: <input type="radio" name="sber" :value="'sberPremier'" v-model="selectedOption"></p>
             <p> СберПервый: <input type="radio" name="sber" :value="'sberFirst'" v-model="selectedOption"></p>
             <p> Sber Private Banking: <input type="radio" name="sber" :value="'sberPrivate'" v-model="selectedOption"></p>
-        </p>
-         <p>Отдаю бонусов: <input type="number" v-model="bonusGive"> руб. Получаю: <span> {{ moneyReturn }} </span> руб.</p>
+            <p>Отдаю бонусов: <input type="number" v-model="bonusGive"> руб. Получаю: <span> {{ moneyReturn }} </span> руб.</p>
+        </p>       
     </div>`,
     data() {
         return {
@@ -31,7 +31,7 @@ app.component('mega-calc', {
             // sberPremier: '',
             // sberFirst: '',
             // sberPrivate: '',
-            selectedOption: 'sberFirst'
+            selectedOption: 'withoutPackage'
         }
     },
     computed: {
@@ -41,7 +41,7 @@ app.component('mega-calc', {
         realPayment() {
             return this.orderSumm - this.bonusPay - this.bonusPay
         },
-        moneyReturn (selectedOption) {
+        moneyReturn () {
             
             if (this.selectedOption === 'withoutPackage') {
                return this.bonusGive * 0.5 
@@ -62,28 +62,5 @@ app.component('mega-calc', {
 
         
     },
-    // methods: {
-    //     handleOptionChange(option) {
-    //         if (option === 'withoutPackage') {
-    //             percent = 0.5;
-    //         }
-    //         if (option === 'sberPrime') {
-    //             percent = 0.6;
-    //         }
-    //         if (option === 'sberPremier') {
-    //             percent = 0.7;
-    //         }
-    //         if (option === 'sberFirst' || option === 'sberPrivate') {
-    //             percent = 0.8;
-    //         }
-    //         return percent;
-    //       }
-    // }
-
-
-
-
-
-
 
 })
