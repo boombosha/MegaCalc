@@ -2,20 +2,30 @@ app.component('mega-calc', {
     template:
     /*html*/
     `<div class="calc-container">
-        <p>Сумма заказа: <input type="number" v-model="orderSumm"> руб.</p>
-        <p>Обещают бонусов: <input type="number" v-model="bonusPromise"> %</p>
-        <p>Промокод: <input type="number" v-model="promocode"> руб.</p>
-        <p>Оплата бонусами: <input type="number" v-model="bonusPay"> руб.</p>
-        <p>Вернут бонусов: <span> {{ bonusBack }} </span> руб.</p>
-        <p>Спишут с карты: <span> {{ realPayment }} </span> руб.</p>
-        <p>Хочу конвертировать бонусы в рубли: <input type="checkbox" v-model="toggle"> </p>
+        <p> Сумма заказа: <input type="number" v-model.number="orderSumm"> руб.</p>
+        <p> Обещают бонусов: <input type="number" v-model.number="bonusPromise"> %</p>
+        <p> Промокод: <input type="number" v-model.number="promocode"> руб.</p>
+        <p> Оплата бонусами: <input type="number" v-model.number="bonusPay"> руб.</p>
+        <div class="alert" v-show="(orderSumm-promocode)<bonusPay">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong>Сумма оплаты бонусами не может превышать сумму заказа</strong>
+        </div>    
+        <p> Вернут бонусов: <span> {{ bonusBack }} </span> руб.</p>
+        <p> Спишут с карты: <span> {{ realPayment }} </span> руб.</p>
+        <p> <span class="checkbox-name">Хочу конвертировать бонусы в рубли:</span>  
+            <label class="checkbox style-e">
+                <input type="checkbox" v-model="toggle" checked="checked"/>
+                <div class="checkbox__checkmark"></div>
+                <div class="checkbox__body"></div>
+            </label>
+        </p>
         <p v-if="toggle">
-            <p> Без пакета услуг: <input type="radio" name="sber" v-model="selectedOption" :value="'withoutPackage'"></p>
-            <p> СберПрайм+: <input type="radio" name="sber" :value="'sberPrime'" v-model="selectedOption"></p>
-            <p> СберПремьер: <input type="radio" name="sber" :value="'sberPremier'" v-model="selectedOption"></p>
-            <p> СберПервый: <input type="radio" name="sber" :value="'sberFirst'" v-model="selectedOption"></p>
-            <p> Sber Private Banking: <input type="radio" name="sber" :value="'sberPrivate'" v-model="selectedOption"></p>
-            <p>Отдаю бонусов: <input type="number" v-model="bonusGive"> руб. Получаю: <span> {{ moneyReturn }} </span> руб.</p>
+            <p> Без пакета услуг: <label><input type="radio" name="sber" v-model="selectedOption" :value="'withoutPackage'"></label></p>
+            <p> СберПрайм+: <label><input type="radio" name="sber" :value="'sberPrime'" v-model="selectedOption"></label></p>
+            <p> СберПремьер: <label><input type="radio" name="sber" :value="'sberPremier'" v-model="selectedOption"></label></p>
+            <p> СберПервый: <label><input type="radio" name="sber" :value="'sberFirst'" v-model="selectedOption"></label></p>
+            <p> Sber Private Banking: <label><input type="radio" name="sber" :value="'sberPrivate'" v-model="selectedOption"></label></p>
+            <p> Отдаю бонусов: <input type="number" v-model="bonusGive"> руб. Получаю: <span class="moneyReturn"> {{ moneyReturn }} </span> руб.</p>
         </p>       
     </div>`,
     data() {
@@ -39,7 +49,12 @@ app.component('mega-calc', {
             return (this.orderSumm - this.promocode - this.bonusPay) * this.bonusPromise / 100
         },
         realPayment() {
-            return this.orderSumm - this.bonusPay - this.bonusPay
+            if ( (this.orderSumm - this.promocode - this.bonusPay) > 0 ) {
+                return this.orderSumm - this.promocode - this.bonusPay
+            }
+            else {
+                return '---'
+            }
         },
         moneyReturn () {
             
