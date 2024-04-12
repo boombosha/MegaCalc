@@ -50,6 +50,7 @@
   justify-content: center;
   align-items: center;
   margin-top: 5vh;
+  margin-bottom: 5vh;
 }
 
 .app-container {
@@ -61,8 +62,29 @@
   background-image:url(./pic/accounting_116484.png);
   background-repeat: no-repeat;
   background-position: top 35px right ;
+}
 
-}  
+.radio-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background-color: rgba(233, 222, 96, 0.2);
+  padding: 20px;
+  color: #21050e;
+}
+
+.radio-container p {
+  margin: 10px 0;
+}
+
+.bonusGive {
+  width: 4em;
+  font-size: 0.1em;
+}
+
+::placeholder {
+  font-size: 0.8em;
+}
 
 input[type="number"] {
 	appearance: none;
@@ -150,12 +172,6 @@ input[type="number"] {
 
 label {
   cursor: pointer;
-}
-
-.radio-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
 }
 
 input[type="radio"] {
